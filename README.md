@@ -1,116 +1,121 @@
 # Telecom Customer Churn Prediction Project
 
-## Overview
-This project focuses on predicting customer churn for **SyriaTel**, a telecommunications company. By identifying customers likely to churn, the company can take proactive measures to improve retention, ultimately reducing churn rates and increasing profitability. This project builds a machine learning classification model to predict which customers are at the highest risk of leaving, enabling the business to make data-driven decisions for customer retention strategies.
+This project focuses on predicting customer churn for SyriaTel, a telecommunications company. By identifying customers likely to churn, the company can take proactive measures to improve retention, ultimately reducing churn rates and increasing profitability.
 
 ## Project Goals
-The primary goals of the project are:
-- **Predict customer churn** using historical customer data.
-- **Provide actionable insights** that can help reduce customer churn through targeted marketing and retention efforts.
-- **Evaluate model performance** using metrics that align with the business objectives, particularly focusing on precision to minimize false positives in churn prediction.
 
----
-
-## Repository Structure
-
-- **`notebook.ipynb`**: The Jupyter notebook containing the code, data analysis, model building, and evaluation.
-- **`README.md`**: This file, providing an overview of the project and the repository structure.
-- **`data/`**: Folder containing the raw data used in the project (if not linked externally).
-- **`images/`**: Folder containing any images or plots used in the project.
-
----
+1. **Predict customer churn** using historical customer data.
+2. **Provide actionable insights** that can help reduce customer churn through targeted marketing and retention efforts.
+3. **Evaluate model performance** with a focus on improving churn recall to capture more at-risk customers.
 
 ## Business Understanding
-The business problem revolves around **customer churn**—the loss of subscribers over time. Churn has a significant financial impact on telecommunications companies like SyriaTel, as acquiring new customers is typically more expensive than retaining existing ones.
 
-**Stakeholders**:
-- **SyriaTel**'s **marketing** and **customer service** departments will be the primary users of the model. These teams can use churn predictions to target at-risk customers with retention offers, discounts, or improved service.
+Customer churn has a significant financial impact on telecommunications companies like SyriaTel, as acquiring new customers is typically more expensive than retaining existing ones. By identifying customers at risk of churning, SyriaTel can focus on retention strategies and optimize customer engagement.
 
----
+## Data Understanding
 
-## Data Understanding (Updated)
+The dataset includes customer data with the following features:
+- **Demographics**: Information like customer location.
+- **Contract Details**: Service-related data such as international plans and customer service calls.
+- **Service Usage**: Minutes and charges for day, evening, and international calls.
+- **Target Variable**: Churn indicator (whether the customer has churned or not).
 
-The dataset contains customer data, including:
-- **Demographic information** (e.g., gender, age).
-- **Contract details** (e.g., type, tenure, payment method).
-- **Service usage** (e.g., number of calls, internet usage).
-- **Churn indicator** (whether the customer has churned or not).
+### Key Features
+1. **Total Day Minutes**: The amount of time customers spend on calls during the day.
+2. **State**: The geographic location of the customer.
+3. **Total Evening Minutes**: The amount of time customers spend on calls during the evening.
+4. **International Calls & Plan**: Usage and plan data related to international calls.
+5. **Customer Service Calls**: Frequency of customer interactions with service representatives.
 
-### Key Features:
+### Data Distribution
 
-From the Random Forest model, the following were identified as the **most important features** for predicting customer churn:
+#### Churn Distribution:
+![Churn Distribution](path/to/churn_distribution_graph.png)
+![alt text](image.png)
 
-1. **Total Day Charge**: This is the most influential factor, suggesting that customers with higher day charges are more likely to churn.
-2. **Total Day Minutes**: The amount of time customers spend on calls during the day is also highly predictive of churn.
-3. **Customer Service Calls**: The number of calls made to customer service is a key indicator, likely reflecting customer dissatisfaction.
-4. **Total Evening Minutes**: How much time customers spend on calls during the evening also plays a role in predicting churn.
-5. **International Plan**: Whether or not a customer is on an international plan significantly influences churn, with both "Yes" and "No" options appearing in the top features.
-6. **Total International Calls**: The number of international calls a customer makes is a predictor of churn.
-7. **Total Evening Charge**: Charges for evening calls also have a moderate impact on churn prediction.
-8. **Total International Charge**: This feature reflects how much customers are being charged for international calls.
-9. **Total International Minutes**: The number of minutes spent on international calls is also a relevant feature.
+This graph shows the distribution of churned vs. non-churned customers, highlighting the class imbalance, where most customers do not churn.
 
----
+#### Total Day Minutes vs. Churn:
+![Total Day Minutes vs Churn](path/to/day_minutes_churn_boxplot.png)
+
+This box plot shows that customers who churn tend to have higher total day minutes compared to those who do not.
 
 ## Data Preparation
-Data preparation steps included:
-1. **Handling missing values** to ensure completeness.
-2. **Feature engineering**, such as creating dummy variables for categorical features (e.g., contract type).
-3. **Data scaling** where necessary to ensure model compatibility.
 
-These steps were taken to ensure the data is suitable for the machine learning models and are fully documented in the notebook.
-
----
+The following steps were taken to prepare the data:
+1. Handling missing values and creating dummy variables for categorical features.
+2. Scaling numerical features for model compatibility.
+3. Separating features into categorical and numerical groups for appropriate preprocessing.
 
 ## Modeling
-The modeling process followed an **iterative approach**:
-1. **Baseline Model**: A simple Logistic Regression model was used as a starting point.
-   - **Accuracy**: 0.86
-   - **Precision for 'Churn' class**: 0.54
-   - **Recall for 'Churn' class**: 0.26
-   - **F1 Score for 'Churn' class**: 0.35
 
-2. **Hypertuned Random Forest Model**: After baseline performance was evaluated, a Random Forest model was built and hypertuned for optimal performance.
-   - **Threshold tuning** was performed to maximize precision while balancing recall for the churn class.
-   - **Accuracy**: 0.95
-   - **Precision for 'Churn' class**: 0.91
-   - **F1 Score for 'Churn' class**: 0.80
+### 1. Baseline Model (Logistic Regression)
+A simple Logistic Regression model was used as a baseline.
 
-This model was chosen as the final model because it provided the best balance of high precision and good recall, which aligns with the business need to minimize false positives.
+- **Accuracy**: 0.86
+- **Precision for Churn**: 0.54
+- **Recall for Churn**: 0.26
+- **F1 Score for Churn**: 0.35
 
----
+### 2. Hypertuned Random Forest Model
+A Random Forest model was trained and hypertuned for better performance, particularly focusing on improving churn precision and recall.
 
-## Evaluation
-The final model was evaluated using:
-- **Precision**: Prioritized to avoid false positives and minimize unnecessary interventions with customers who are not at risk of churning.
-- **F1 Score**: Used to balance precision and recall for an overall performance metric.
-  
-Evaluation on the **holdout test set** confirmed that the model generalizes well to unseen data, providing robust predictions for use in SyriaTel's customer retention strategy.
+- **Accuracy**: 0.94
+- **Precision for Churn**: 0.91
+- **Recall for Churn**: 0.63
+- **F1 Score for Churn**: 0.74
 
----
+### 3. Final Model: Refined LightGBM
+The **LightGBM model** was chosen for its ability to handle class imbalance and improve churn recall. After hyperparameter tuning and threshold adjustments, the refined model provided the best results.
 
-## Code Quality
-The code in this project follows professional standards:
-- **PEP 8** guidelines were adhered to, ensuring the code is clean and readable.
-- Comments and docstrings are included to explain key steps.
-- Repetitive code was minimized using functions and loops where applicable.
+- **Accuracy**: 0.92
+- **Precision for Churn**: 0.70
+- **Recall for Churn**: 0.80
+- **F1 Score for Churn**: 0.75
 
----
+### Model Comparison:
+| Model                  | Accuracy | Precision (Churn) | Recall (Churn) | F1 Score (Churn) |
+|------------------------|----------|------------------|----------------|------------------|
+| Logistic Regression     | 0.86     | 0.54             | 0.26           | 0.35             |
+| Random Forest           | 0.94     | 0.91             | 0.63           | 0.74             |
+| Refined LightGBM        | 0.92     | 0.70             | 0.80           | 0.75             |
 
-## GitHub Repository
-This project repository demonstrates best practices:
-- **README.md** file summarizing the project.
-- **Organized folder structure** with clear naming conventions.
-- **Regular commits** with descriptive messages reflecting the project's development process.
+## Feature Importance
 
----
+Key features identified by the LightGBM model:
+1. **Total Day Minutes**: Customers with high usage are more likely to churn.
+2. **State**: Geographic location plays a significant role in churn risk.
+3. **Total Evening Minutes**: Evening usage also correlates with churn.
+
+#### Feature Importance Chart:
+![Feature Importance](path/to/feature_importance_chart.png)
+
+This chart shows the importance of various features in predicting churn. Usage patterns, such as day and evening minutes, along with customer location and customer service calls, are the most significant predictors.
+
+## Business Recommendations
+
+1. **Proactive Engagement with High-Usage Customers**: Focus on customers with high total day minutes by offering personalized retention plans or incentives.
+2. **Geographic Targeting**: Use state-specific strategies to address churn risks based on location.
+3. **Enhanced Customer Service Monitoring**: Track customers with frequent service interactions and provide timely support to reduce churn risk.
 
 ## Conclusion
-This project demonstrates how machine learning can provide valuable insights for predicting customer churn. By building a high-performing model, SyriaTel can better allocate resources towards retaining customers who are at risk of leaving, ultimately improving business outcomes. The model is ready to be deployed and integrated into the company's operations for ongoing churn prediction.
 
----
+The refined LightGBM model with a churn recall of 80% provides SyriaTel with an effective tool to identify at-risk customers. By focusing on key factors like usage patterns and customer service interactions, SyriaTel can take targeted actions to retain more customers and reduce churn.
+
+## Next Steps
+
+1. **Develop Targeted Campaigns**: Launch personalized campaigns for high-usage customers and specific geographic regions.
+2. **Integrate Churn Predictions into Operations**: Embed churn predictions into SyriaTel's CRM for real-time action on high-risk customers.
 
 ## Instructions for Running the Project
+
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/nealiyer88/Telecom
+    ```
+    git clone https://github.com/nealiyer88/Telecom
+    ```
+2. Run the notebook to reproduce the results and insights.
+
+---
+This project demonstrates the use of machine learning to predict customer churn, providing actionable insights for customer retention strategies at SyriaTel.
+
+
