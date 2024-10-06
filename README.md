@@ -31,13 +31,13 @@ The dataset includes customer data with the following features:
 
 #### Churn Distribution:
 
-![alt text](image.png)
+![Churn Distribution](images/image.png)
 
 This graph shows the distribution of churned vs. non-churned customers, highlighting the class imbalance, where most customers do not churn.
 
 #### Total Day Minutes vs. Churn:
 
-![alt text](image-1.png)
+![Total Day Minutes vs. Churn](images/image-1.png)
 
 This box plot shows that customers who churn tend to have higher total day minutes compared to those who do not.
 
@@ -89,7 +89,7 @@ Key features identified by the LightGBM model:
 3. **Total Evening Minutes**: Evening usage also correlates with churn.
 
 #### Feature Importance Chart:
-![alt text](image-2.png)
+![Feature Importance Chart](images/image-2.png)
 
 This chart shows the importance of various features in predicting churn. Usage patterns, such as day and evening minutes, along with customer location and customer service calls, are the most significant predictors.
 
